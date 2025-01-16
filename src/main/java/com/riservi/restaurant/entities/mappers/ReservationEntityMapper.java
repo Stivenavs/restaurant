@@ -7,6 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ReservationEntityMapper {
     ReservationDomain toDomain(ReservationEntity entity);
-
     ReservationEntity toEntity(ReservationDomain domain);
 }

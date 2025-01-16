@@ -9,7 +9,5 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Integer> {
     List<ReservationEntity> findByDate(LocalDate date);
-    List<ReservationEntity> findByCustomer_Id(int customerId);
-    List<ReservationEntity> findByRestaurant_Id(int restaurantId);
 }
 

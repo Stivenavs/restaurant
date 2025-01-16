@@ -1,18 +1,20 @@
 package com.riservi.restaurant.models;
 
+
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalTime;
+
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TablesDomain {
+public class ScheduleDomain {
     private Integer id;
-    private String description;
-    private int numTable;
+    private LocalTime hour;
     private Integer restaurantId;
 }
-

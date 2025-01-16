@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +14,6 @@ public class CustomerDomain {
     private String firstName;
     private String lastName;
     private String document;
-    private List<ReservationDomain> reservations;
+    //private List<ReservationDomain> reservations;
 }
 

@@ -1,8 +1,11 @@
 package com.riservi.restaurant.controllers;
 
 import com.riservi.restaurant.controllers.dto.in.ReservationInDTO;
+import com.riservi.restaurant.controllers.dto.out.AvailableSchedulesOutDTO;
 import com.riservi.restaurant.controllers.dto.out.ReservationOutDTO;
 import com.riservi.restaurant.controllers.mappers.ReservationMapper;
+import com.riservi.restaurant.controllers.mappers.SchedulesMapper;
+import com.riservi.restaurant.models.AvailableSchedulesDomain;
 import com.riservi.restaurant.models.ReservationDomain;
 import com.riservi.restaurant.services.ReservationService;
 import lombok.AllArgsConstructor;
@@ -10,23 +13,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+
 @RestController
+@AllArgsConstructor
 @RequestMapping("/reservation")
 public class RestaurantController {
-    private final ReservationService restaurantService;
-    private final ReservationMapper reservationMapper;
+    private  ReservationService reservationService;
+
+    private  ReservationMapper reservationMapper;
+
+    private  SchedulesMapper schedulesMapper;
 
     @PostMapping("/create")
     public ResponseEntity<ReservationOutDTO> createReservation(@RequestBody ReservationInDTO reservationInDTO){
         ReservationOutDTO reservationOutDTO = new ReservationOutDTO();
 
         try {
-            ReservationDomain reservationDomain = restaurantService.createReservation(reservationMapper.toDomain(reservationInDTO));
+            ReservationDomain reservationDomain = reservationService.createReservation(reservationMapper.toDomain(reservationInDTO));
             reservationOutDTO = reservationMapper.toResponse(reservationDomain);
             return ResponseEntity.ok(reservationOutDTO);
         } catch (Exception e) {
@@ -39,7 +47,7 @@ public class RestaurantController {
         List<ReservationOutDTO> reservationOutDTOList = new ArrayList<>();
 
         try {
-            List<ReservationDomain>  reservationDomainList = restaurantService.getAllReservations();
+            List<ReservationDomain> reservationDomainList = reservationService.getAllReservations();
             reservationOutDTOList = reservationDomainList.stream()
                     .map(reservationMapper::toResponse)
                     .collect(Collectors.toList());
@@ -54,7 +62,7 @@ public class RestaurantController {
         ReservationOutDTO reservationOutDTO = new ReservationOutDTO();
 
         try {
-            ReservationDomain reservationDomain = restaurantService.getReservation(id);
+            ReservationDomain reservationDomain = reservationService.getReservation(id);
             reservationOutDTO = reservationMapper.toResponse(reservationDomain);
             return ResponseEntity.ok(reservationOutDTO);
         } catch (Exception e) {
@@ -67,7 +75,7 @@ public class RestaurantController {
         List<ReservationOutDTO> reservationOutDTOList = new ArrayList<>();
 
         try {
-            List<ReservationDomain> reservationDomainList = restaurantService.getReservationByDate(date);
+            List<ReservationDomain> reservationDomainList = reservationService.getReservationByDate(date);
             reservationOutDTOList =  reservationDomainList.stream()
                     .map(reservationMapper::toResponse)
                     .collect(Collectors.toList());
@@ -82,7 +90,7 @@ public class RestaurantController {
         ReservationOutDTO reservationOutDTO = new ReservationOutDTO();
 
         try {
-            ReservationDomain reservationDomain = restaurantService.updateReservation(reservationMapper.toDomain(reservationInDTO));
+            ReservationDomain reservationDomain = reservationService.updateReservation(reservationMapper.toDomain(reservationInDTO));
             reservationOutDTO = reservationMapper.toResponse(reservationDomain);
             return ResponseEntity.ok(reservationOutDTO);
         } catch (Exception e) {
@@ -95,11 +103,29 @@ public class RestaurantController {
         ReservationOutDTO reservationOutDTO = new ReservationOutDTO();
 
         try {
-            ReservationDomain reservationDomain = restaurantService.getReservation(id);
+            ReservationDomain reservationDomain = reservationService.getReservation(id);
             reservationOutDTO = reservationMapper.toResponse(reservationDomain);
             return ResponseEntity.ok(reservationOutDTO);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(reservationOutDTO);
+        }
+    }
+
+
+    @GetMapping("/checkAvailableSchedules")
+    public ResponseEntity<List<AvailableSchedulesOutDTO>> checkAvailableSchedules(@RequestParam int restaurantId,
+                                                                                  @RequestParam LocalDate date,
+                                                                                  @RequestParam LocalTime time){
+        List<AvailableSchedulesOutDTO> availableSchedulesOutDTOList = new ArrayList<>();
+
+        try {
+            List<AvailableSchedulesDomain> availableSchedulesDomain = reservationService.checkAvailableSchedules(restaurantId, date, time);
+            availableSchedulesOutDTOList = availableSchedulesDomain.stream()
+                    .map(schedulesMapper::toResponse)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(availableSchedulesOutDTOList);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(availableSchedulesOutDTOList);
         }
     }
 }

@@ -17,7 +17,7 @@ public class RestaurantDomain {
     private LocalTime openingHours;
     private LocalTime closingHours;
     private List<ReservationDomain> reservations;
-    private List<SchedulesDomain> schedules;
-    private List<TablesDomain> tables;
+    private List<ScheduleDomain> schedules;
+    private List<TableDomain> tables;
 }
 

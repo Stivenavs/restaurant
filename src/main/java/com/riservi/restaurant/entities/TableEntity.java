@@ -1,14 +1,18 @@
 package com.riservi.restaurant.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "TABLES")
 @Getter
 @Setter
-public class TablesEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "TABLES")
+public class TableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,4 +27,9 @@ public class TablesEntity {
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     private RestaurantEntity restaurant;
+
+    @OneToOne(mappedBy = "table")
+    private ReservationEntity reservation;
+
+
 }

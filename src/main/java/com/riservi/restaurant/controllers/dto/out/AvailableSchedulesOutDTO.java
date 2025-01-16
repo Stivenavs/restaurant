@@ -1,4 +1,4 @@
-package com.riservi.restaurant.controllers.dto.in;
+package com.riservi.restaurant.controllers.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,12 +14,9 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReservationInDTO {
-    public int id;
+public class AvailableSchedulesOutDTO {
+    public int restaurantId;
+    public int tableNumber;
     public LocalDate date;
     public LocalTime time;
-    public int tableNumber;
-    public int customerId;
-    public int restaurantId;
 }
-

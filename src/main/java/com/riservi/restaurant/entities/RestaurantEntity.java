@@ -1,17 +1,21 @@
 package com.riservi.restaurant.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "RESTAURANTS")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "RESTAURANTS")
 public class RestaurantEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +38,5 @@ public class RestaurantEntity {
     private List<ReservationEntity> reservationEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SchedulesEntity> schedulesEntities = new ArrayList<>();
+    private List<ScheduleEntity> schedulesEntities = new ArrayList<>();
 }

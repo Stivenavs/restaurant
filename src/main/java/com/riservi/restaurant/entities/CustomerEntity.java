@@ -1,16 +1,20 @@
 package com.riservi.restaurant.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "CUSTOMERS")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "CUSTOMERS")
 public class CustomerEntity {
 
     @Id
